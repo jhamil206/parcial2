@@ -1,29 +1,21 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { storeToRefs } from 'pinia'
+import { useProductoStore } from './stores/productoStore'
 
-// 1. CONTRATOS DE TIPADO
-interface Producto {
-  id: number;
-  nombre: string;
-  precio: number;
-  stock: number;
-  imagen: string;
-}
+import LoginCard from './components/LoginCard.vue'
+import AlmacenActivo from './components/AlmacenActivo.vue'
 
-// 2. ESTADO REACTIVO e INTERFACES
-const isAuthenticated = ref(false);
-// ... Tus variables y funciones del laboratorio (handleLogin, etc.)
+const store = useProductoStore()
+
+const { estaLogueado } = storeToRefs(store)
 </script>
 
 <template>
   <div class="container mt-5">
-    <div v-if="!isAuthenticated">
-      </div>
-    <div v-else>
-      </div>
+
+    <LoginCard v-if="!estaLogueado" />
+
+    <AlmacenActivo v-else />
+
   </div>
 </template>
-
-<style scoped>
-/* Tus estilos personalizados */
-</style>

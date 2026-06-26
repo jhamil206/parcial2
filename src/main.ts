@@ -1,5 +1,9 @@
 import { createApp } from 'vue'
-import App from './app.vue'
+import { createPinia } from 'pinia'
+import App from './App.vue'
 
-// Inyecta el componente App.vue en el div con id "app"
-createApp(App).mount('#app')
+const app = createApp(App)
+
+app.use(createPinia())
+
+app.mount('#app')
