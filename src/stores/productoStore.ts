@@ -1,0 +1,69 @@
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
+import type { Producto } from '../interfaces/producto';
+
+export const useProductoStore = defineStore('producto', () => {
+    // Estados Reactivos
+    const estaLogueado = ref<boolean>(false);
+    const usuarioInput = ref<string>('');
+    const contrasenaInput = ref<string>('');
+    const errorMensaje = ref<string>('');
+
+    // Credenciales fijas
+    const CREDENCIALES = {
+        usuario: 'felix.maldonado',
+        contrasena: 'itpm2026'
+    };
+
+    // Colección fuertemente tipada con tu lista original de productos
+    const listaProductos = ref<Producto[]>([
+        { 
+            id: 101, 
+            nombre: 'Teclado Mecánico RGB', 
+            precio: 250, 
+            stock: 12, 
+            imagen: 'https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=400&auto=format&fit=crop&q=60' 
+        },
+        { 
+            id: 102, 
+            nombre: 'Mouse Óptico Inalámbrico', 
+            precio: 110, 
+            stock: 20, 
+            imagen: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=400&auto=format&fit=crop&q=60' 
+        },
+        { 
+            id: 103, 
+            nombre: 'Monitor Gamer 24\' 144Hz', 
+            precio: 1450, 
+            stock: 5, 
+            imagen: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&auto=format&fit=crop&q=60' 
+        }
+    ]);
+
+    // Acciones (Lógica de negocio)
+    const login = (): void => {
+        if (usuarioInput.value === CREDENCIALES.usuario && contrasenaInput.value === CREDENCIALES.contrasena) {
+            estaLogueado.value = true;
+            errorMensaje.value = '';
+        } else {
+            errorMensaje.value = 'Usuario o contraseña incorrectos.';
+        }
+    };
+
+    const salir = (): void => {
+        estaLogueado.value = false;
+        usuarioInput.value = '';
+        contrasenaInput.value = '';
+        errorMensaje.value = '';
+    };
+
+    return {
+        estaLogueado,
+        usuarioInput,
+        contrasenaInput,
+        errorMensaje,
+        listaProductos,
+        login,
+        salir
+    };
+});
